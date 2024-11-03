@@ -7,5 +7,5 @@ export const errorHandler = (err:Error,req:Request,res:Response,next:NextFunctio
     if (err instanceof CustomError) {
          return res.status(err.statusCode).send({errors:err.serializeErrors()})
     }
-    res.status(400).send({errors:[{msg:"Something went wrong"}]});
+    res.status(400).send({errors:[{msg: err.message || "Something went wrong"}]});
 };

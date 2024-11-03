@@ -6,9 +6,15 @@ import { signupRouter } from "./routes/signup";
 import { signoutRouter } from "./routes/signout";
 import { errorHandler } from "./middlewares/error-handler";
 import { NotFoundError } from "./errors/not-found-error";
+import cookieSession from 'cookie-session';
 import mongoose from "mongoose";
 
 const app = express();
+app.set("trust proxy",true);
+app.use(cookieSession({
+    signed:false,
+    secure:true
+}));
 app.use(express.json());
 app.get('/', (req,res) => {
     res.send("OK");
@@ -23,6 +29,7 @@ app.all('*',async () => {
 });
 app.use(errorHandler as (err: Error, req: Request, res: Response, next: NextFunction) => void);
 const start = async () => {
+    if(!process.env.JWT_KEY) throw new Error("JWT must be defined");
     try {
         mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
         console.log('Connected to mongodb');
