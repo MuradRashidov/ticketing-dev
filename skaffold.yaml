@@ -28,3 +28,11 @@ build:
             dest: .
           - src: '**/*.jsx'
             dest: .
+    - image: us.gcr.io/ticketing-dev-440016/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .

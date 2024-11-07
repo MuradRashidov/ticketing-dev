@@ -4,7 +4,6 @@ import { app } from "./app";
 const start = async () => {
     if(!process.env.JWT_KEY) throw new Error("JWT must be defined");
     if(!process.env.MONGO_URI) throw new Error("JWT must be defined");
-
     try {
         mongoose.connect(process.env.MONGO_URI);
         console.log('Connected to mongodb');
@@ -13,7 +12,7 @@ const start = async () => {
         console.log(error);
     }
     app.listen(3000, () => {
-        console.log("Auth service is running http://localhost:3000!")
+        console.log("Tickets service is running http://localhost:3000!")
     });
 }
 start();
