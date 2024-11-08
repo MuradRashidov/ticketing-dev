@@ -9,6 +9,7 @@ import { currentUser, errorHandler } from "@test_comp/common";
 import { createTicketRoute } from "./routes/new";
 import { showTicketRoute } from "./routes/show";
 import { indexTicketRouter } from "./routes";
+import { updateTicketRouter } from "./routes/update";
 
 const app = express();
 app.set("trust proxy",true);
@@ -24,6 +25,7 @@ app.use(currentUser);
 app.use(createTicketRoute)
 app.use(showTicketRoute)
 app.use(indexTicketRouter)
+app.use(updateTicketRouter)
 
 app.use(errorHandler as (err: Error, req: Request, res: Response, next: NextFunction) => void);
 
