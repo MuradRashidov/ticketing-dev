@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../app';
 import jwt from 'jsonwebtoken';
+import { Order } from '../models/order';
 
 jest.mock('../nats-wrapper');
 
@@ -25,6 +26,7 @@ beforeAll(async () => {
 
 beforeEach(async () => {
     jest.clearAllMocks();
+    const ordersLength = await Order.find();    
     if (mongoose.connection.db) {
       const collections = await mongoose.connection.db.collections();
    
