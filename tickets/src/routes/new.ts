@@ -17,27 +17,19 @@ router.post('/api/tickets',
       const { title, price } = req.body;
       const ticket = Ticket.build({ price, title, userId:req.currentUser!?.id});
       await ticket.save();
-      //console.log('Ticket: ', ticket);
-      // await new TicketCreatedPublisher(natsWrapper.client).publish({
-      //   id:ticket.id,
-      //   price:ticket.price,
-      //   title:ticket.title,
-      //   userId:ticket.userId
-      // })
       try {
        await  new TicketCreatedPublisher(natsWrapper.client).publish({
           id: ticket.id,
           price: ticket.price,
           title: ticket.title,
-          userId: ticket.userId
+          userId: ticket.userId,
+          version: ticket.version
         });
         res.status(201).send(ticket);
       } catch (err) {
         console.error("Failed to publish event:", err);
         res.status(500).send({ error: "Event publish failed" });
       }
-      
-      //res.status(201).send(ticket);
-});
+      });
 
 export {router as createTicketRoute};

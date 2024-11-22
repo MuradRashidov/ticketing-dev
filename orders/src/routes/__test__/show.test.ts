@@ -1,10 +1,10 @@
-import request from "supertest";
-import { Ticket } from "../models/ticket";
-import { app } from "../app";
-import { body } from "express-validator";
+import mongoose from "mongoose";
+import { Ticket } from "../../models/ticket";
+import  request  from "supertest";
+import { app } from "../../app";
 
 it('get order belong to current user', async () => {
-    const ticket = Ticket.build({ title: 'asd', price: 20 });
+    const ticket = Ticket.build({ title: 'asd', price: 20, id:new mongoose.Types.ObjectId().toHexString() });
     await ticket.save();
     const user = global.signin();
     const { body: order } = await request(app)
@@ -19,7 +19,7 @@ it('get order belong to current user', async () => {
 });
 
 it('error when request for one order by not author', async () => {
-    const ticket = Ticket.build({ title: 'asd', price: 20 });
+    const ticket = Ticket.build({ title: 'asd', price: 20,id:new mongoose.Types.ObjectId().toHexString() });
     await ticket.save();
     const user = global.signin();
     const { body: order } = await request(app)

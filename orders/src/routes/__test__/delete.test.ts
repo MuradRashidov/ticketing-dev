@@ -1,12 +1,14 @@
-import request from "supertest";
-import { Ticket } from "../models/ticket";
-import { app } from "../app";
-import { Order } from "../models/order";
+import mongoose from "mongoose";
+import { Ticket } from "../../models/ticket";
+import  request  from "supertest";
+import { app } from "../../app";
+import { Order } from "../../models/order";
 import { OrderStatus } from "@test_comp/common";
-import { natsWrapper } from "../nats-wrapper";
+import { natsWrapper } from "../../nats-wrapper";
+
 
 it('marks an order as cancelled', async () => {
-    const ticket = Ticket.build({ title: 'asd', price: 20 });
+    const ticket = Ticket.build({ title: 'asd', price: 20,id:new mongoose.Types.ObjectId().toHexString()});
     await ticket.save();
     const user = global.signin(); 
     const { body: order } = await request(app)
@@ -21,7 +23,7 @@ it('marks an order as cancelled', async () => {
 });
 
 it('emits an order cancelled event', async () => {
-    const ticket = Ticket.build({ title: 'asd', price: 20 });
+    const ticket = Ticket.build({ title: 'asd', price: 20, id:new mongoose.Types.ObjectId().toHexString() });
     await ticket.save();
     const user = global.signin(); 
     const { body: order } = await request(app)
