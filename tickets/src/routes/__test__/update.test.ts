@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
 import { natsWrapper } from '../../nats-wrapper';
+import { Ticket } from '../../models/ticket';
 
 it('return 404 if provided id is does not exist', async () => {
      const id =new mongoose.Types.ObjectId().toHexString();
@@ -86,7 +87,7 @@ it('update ticket with valid input', async () => {
     
 });
 
-it('check update event is callae', async () => {
+it('check update event is called', async () => {
      const cookie = global.signin()
      const res =   await request(app)
      .post('/api/tickets')
@@ -110,4 +111,25 @@ it('check update event is callae', async () => {
      expect(updatedTicket.body.price).toEqual(10)
      expect(natsWrapper.client.publish).toHaveBeenCalled()
      
+ });
+
+ it('reject update if ticket reserved', async () => {
+     const cookie = global.signin()
+     const res =   await request(app)
+     .post('/api/tickets')
+     .set('Cookie',cookie)
+     .send({
+            title:"dsfdsklfsd",
+            price:20
+           })
+      .expect(201);
+     const id = res.body.id;
+     const ticket = await Ticket.findById(id);
+     ticket?.set({orderId: new mongoose.Types.ObjectId().toHexString()});
+     await ticket?.save();
+     await request(app)
+     .put(`/api/tickets/${id}`)
+     .set('Cookie',cookie)
+     .send({title:"asdf",price:10})
+     .expect(500);     
  });

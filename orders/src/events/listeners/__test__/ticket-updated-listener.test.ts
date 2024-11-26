@@ -20,7 +20,7 @@ const setup = async () => {
         title: 'test',
         price: 30,
         version: ticket.version + 1,
-        userId:'edewdefwefdsfsf'
+        userId:'edewdefwefdsfsf',
     }
 // @ts-ignore
     const msg: Message = {
@@ -39,10 +39,23 @@ it('finds, updates and saves ticket', async () => {
     expect(updatedTicket?.title).toEqual('test');
     expect(updatedTicket?.price).toEqual(30);
 });
+
 it('acks  msg', async () => {
     const { data, listener, msg, ticket } = await setup();
     await listener.onMessage(data,msg);
     expect(msg.ack).toHaveBeenCalled();
 });
+
+it('does not call ack if the event has a skipped version', async () => {
+    const { data, listener, msg, ticket } = await setup();
+    data.version = 5;
+    try {
+        await listener.onMessage(data,msg)
+    } catch (error) {
+        
+    }
+    expect(msg.ack).not.toHaveBeenCalled();
+});
+
 
 

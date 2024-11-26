@@ -1,4 +1,4 @@
-import { NotAuthorizedError, NotFoundError, requireAuth, ValidateRequest } from "@test_comp/common";
+import { BadRequestError, NotAuthorizedError, NotFoundError, requireAuth, ValidateRequest } from "@test_comp/common";
 import express, { Request, Response }  from "express";
 import { body } from "express-validator";
 import { Ticket } from "../models/ticket";
@@ -20,6 +20,7 @@ router.put('/api/tickets/:id',requireAuth,[
 
     if(!updatedTicket) throw new NotFoundError();
     if (updatedTicket.userId !== userId) throw new NotAuthorizedError();
+    if(updatedTicket.orderId) throw new BadRequestError('Cannot reserve a reserved ticket');
     
     updatedTicket.title = title;
     updatedTicket.price = price;
@@ -30,7 +31,7 @@ router.put('/api/tickets/:id',requireAuth,[
         title:   updatedTicket.title,
         userId:  updatedTicket.userId,
         version: updatedTicket.version
-    })
+    });
     res.send(updatedTicket);
 });
 
