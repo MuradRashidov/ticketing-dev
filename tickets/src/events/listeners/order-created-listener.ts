@@ -5,7 +5,7 @@ import { TicketUpdatedPublisher } from "../publishers/ticket-updated-publisher";
 
 export class OrderCreatedListener extends Listener<OrderCreatedEvent>{
     subject: Subjects.OrderCreated = Subjects.OrderCreated;
-    queueGroupName: string = this.queueGroupName;
+    queueGroupName: string = 'tickets-service';
     async onMessage(data: OrderCreatedEvent['data'], msg: Message): Promise<void> {
         const ticket = await Ticket.findById(data.ticket.id);
         if(!ticket) throw new Error('Ticket not found');

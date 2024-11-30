@@ -12,10 +12,17 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
         //     _id:id,
         //     version: version - 1
         // });
-        const ticket = await Ticket.findByEvent(data);
+        try {
+            const ticket = await Ticket.findByEvent(data);
         if(!ticket) throw new Error('Ticket Not Found');
         ticket.set({ title, price });
         await ticket.save();
+        console.log('Ticket in order srv ticket update listener: ',ticket);
+        
         msg.ack();
+        } catch (error) {
+            console.log('Error:  ',error);
+            
+        }
     }
 }

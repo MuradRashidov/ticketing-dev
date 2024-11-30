@@ -30,7 +30,7 @@ router.put('/api/tickets/:id',requireAuth,[
         price:   updatedTicket.price,
         title:   updatedTicket.title,
         userId:  updatedTicket.userId,
-        version: updatedTicket.version
+        version: updatedTicket.version,
     });
     res.send(updatedTicket);
 });

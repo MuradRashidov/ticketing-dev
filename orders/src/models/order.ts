@@ -1,5 +1,5 @@
 import { OrderStatus } from "@test_comp/common";
-import mongoose from "mongoose";
+import mongoose, { version } from "mongoose";
 import { TicketDoc } from "./ticket";
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
@@ -39,7 +39,7 @@ const orderSchema = new mongoose.Schema({
     ticket: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Ticket'
-    }
+    },
 },{
     toJSON:{
         transform(doc,ret) {
