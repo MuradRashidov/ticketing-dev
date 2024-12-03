@@ -3,12 +3,12 @@ import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../app';
 import jwt from 'jsonwebtoken';
-import { Order } from '../models/order';
 
 jest.mock('../nats-wrapper');
+//jest.mock('../stripe');
 
 declare global {
-  var signin: (id?:string) => string;
+  var signin: (id?: string) => string;
 }
 
 
@@ -16,6 +16,7 @@ declare global {
 
 
 let mongo:any;
+process.env.STRIPE_SECRET_KEY = 'sk_test_51OltgyESex0jeEay012p1Uz1RPWdqmWFeNoRdgCLQfztBpTWAqeT0OcsJX3aQtRekOY5JW2RegGm2mDmTL2k12Xi0000S2sM2q'
 beforeAll(async () => {
     process.env.JWT_KEY = 'asdf'
 
@@ -26,7 +27,6 @@ beforeAll(async () => {
 
 beforeEach(async () => {
     jest.clearAllMocks();
-    const ordersLength = await Order.find();    
     if (mongoose.connection.db) {
       const collections = await mongoose.connection.db.collections();
    
@@ -43,9 +43,9 @@ beforeEach(async () => {
     await mongoose.connection.close();
   });
 
-global.signin = () => {
+global.signin = (id?: string) => {
   const payload = { 
-    id:new mongoose.Types.ObjectId().toHexString(),
+    id: id || new mongoose.Types.ObjectId().toHexString(),
     email:"test@gmail.com" };
   const token = jwt.sign(payload,process.env.JWT_KEY!);
   const session = JSON.stringify({jwt:token});
