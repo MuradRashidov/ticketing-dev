@@ -8,7 +8,6 @@ const start = async () => {
     if(!process.env.MONGO_URI) throw new Error("JWT must be defined");
     console.log('testt');
     console.log('testt');
-    console.log('testt');
 
     try {
         mongoose.connect(process.env.MONGO_URI);
