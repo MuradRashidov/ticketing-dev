@@ -9,6 +9,7 @@ const start = async () => {
     console.log('testt');
     console.log('testt');
     console.log('testt');
+    console.log('testt');
 
     try {
         mongoose.connect(process.env.MONGO_URI);
