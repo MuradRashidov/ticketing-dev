@@ -11,7 +11,7 @@ build:
   googleCloudBuild:
     projectId: ticketing-dev-440016
   artifacts:
-    - image: us.gcr.io/ticketing-dev-440016/auth
+    - image: muradrashidov/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -19,7 +19,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/ticketing-dev-440016/client
+    - image: muradrashidov/client
       context: client
       docker:
         dockerfile: Dockerfile
@@ -29,7 +29,7 @@ build:
             dest: .
           - src: '**/*.jsx'
             dest: .
-    - image: us.gcr.io/ticketing-dev-440016/tickets
+    - image: muradrashidov/tickets
       context: tickets
       docker:
         dockerfile: Dockerfile
@@ -37,7 +37,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/ticketing-dev-440016/orders
+    - image: muradrashidov/orders
       context: orders
       docker:
         dockerfile: Dockerfile
@@ -45,7 +45,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/ticketing-dev-440016/expiration
+    - image: muradrashidov/expiration
       context: expiration
       docker:
         dockerfile: Dockerfile
@@ -53,7 +53,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/ticketing-dev-440016/payments
+    - image: muradrashidov/payments
       context: payments
       docker:
         dockerfile: Dockerfile
