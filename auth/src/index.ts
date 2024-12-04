@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { app } from "./app";
 
 const start = async () => {
-    console.log('testttt');
+    console.log('testtttt');
     //asddfdasf
     if(!process.env.JWT_KEY) throw new Error("JWT must be defined");
     if(!process.env.MONGO_URI) throw new Error("JWT must be defined");
