@@ -2,10 +2,11 @@ import mongoose from "mongoose";
 import { app } from "./app";
 
 const start = async () => {
-    console.log('test');
+    console.log('testt');
     
     if(!process.env.JWT_KEY) throw new Error("JWT must be defined");
     if(!process.env.MONGO_URI) throw new Error("JWT must be defined");
+    console.log('testt');
 
     try {
         mongoose.connect(process.env.MONGO_URI);
