@@ -30,7 +30,7 @@ const start = async () => {
         });
         await mongoose.connect(process.env.MONGO_URI);
         console.log('Connected to mongodb');
-
+        //jkhkjk
         new TicketCreatedListener(natsWrapper.client).listen();
         new TicketUpdatedListener(natsWrapper.client).listen();
         new ExpirationCompleteListener(natsWrapper.client).listen();
