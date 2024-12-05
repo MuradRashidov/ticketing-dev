@@ -12,6 +12,7 @@ const start = async () => {
             process.exit();
         });
         process.on('SIGINT', () => {
+            //test
             console.log('SIGINT received, closing NATS connection...');
             natsWrapper.client.close();
         });
