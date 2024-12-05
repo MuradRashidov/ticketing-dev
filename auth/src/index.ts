@@ -2,12 +2,11 @@ import mongoose from "mongoose";
 import { app } from "./app";
 
 const start = async () => {
-    if(!process.env.JWT_KEY) throw new Error("JWT must be defined");
+    if(!process.env.JWT_KEY) throw new Error("JWT must be defined!");
     if(!process.env.MONGO_URI) throw new Error("JWT must be defined");
     try {
         mongoose.connect(process.env.MONGO_URI);
         console.log('Connected to mongodb');
-        //jkkkjnbhjjhbbjbjh
     } catch (error) {
         console.log(error);
     }
